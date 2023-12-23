@@ -167,6 +167,9 @@
         cursor: pointer;
     }
     #mobile-menu.isclicked .bar:nth-child(2){
-        
+        opacity:0;
+    }
+    #mobile-menu.isclicked .bar:nth-child(1){
+        transform: translateY(-8px) rotate (-45 deg);
     }
 }
