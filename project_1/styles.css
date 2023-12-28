@@ -400,6 +400,26 @@
     grip-template-rows: 1fr;
 }
 
+.services__card button{
+    color: #fff; 
+    padding: 14px 24px;
+    border: none; 
+    outline: none; 
+    border-radius: 4px;
+    background: #131313;
+    font-sizer: 1rem;
+}
+
+.services__card button:houver{
+    cursor: pointer;
+}
+
+.services__card:houver{
+    transform: scale(1.075);
+    transition: 0.3 ease-in;
+    cursor: pointer;
+}
+
 .services__card{
     margin: 10px;
     height: 425px;
@@ -416,5 +436,6 @@
     background: #de6161;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #2657eb, #de6161);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #2657eb, #de6161); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    
 }
+
+/* featur Section */

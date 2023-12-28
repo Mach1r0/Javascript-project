@@ -8,4 +8,3 @@
     }
 
     menu.addEventListener('click', mobileMenu);
-    const = documento.querySelector(".main"); outro teste
