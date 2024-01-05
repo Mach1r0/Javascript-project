@@ -82,3 +82,6 @@
     font-size: 28px;
     margin-top: auto;
 }
+.weather{
+    display: none;
+}
