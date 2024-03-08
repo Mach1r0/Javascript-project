@@ -2,6 +2,7 @@ const HeroRepository = require("../repositories/heroRepository")
 
 class HeroService {
     constructor({ HeroRepository }){
+        console.log(HeroRepository); // Add this line
         this.HeroRepository = HeroRepository
     }
 

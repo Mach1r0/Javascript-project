@@ -7,8 +7,8 @@ const generateInstance = () => {
     const heroRepository = new HeroRepository({
         file: filename
     })
-    const heroService = new HeroService({ 
-        heroRepository
+    const heroService = new HeroService({
+        HeroRepository: heroRepository
     })
 
     return heroService
