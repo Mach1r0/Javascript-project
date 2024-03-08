@@ -2,11 +2,15 @@ const http = require("http");
 const url = require('url');
 const PORT = 3000;
 const DEFAULT_HEADER = { 'Content-type': 'application/json' }
+const HeroFactory = require('./factories/heroFactory')
+const heroService = HeroFactory.generateInstance()
 
 const routes = {
   '/heroes:get': async (request, response) => { 
     const { id } = request.queryString
-    console.log({ id })
+    const heroes = await heroService.find(id) 
+    response.write(JSON.stringify({ results: heroes }))
+    
     return response.end()
   },
   
