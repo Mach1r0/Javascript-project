@@ -8,29 +8,39 @@ const heroService = HeroFactory.generateInstance()
 const Hero = require('./entities/hero')
 
 const routes = {
-  '/heroes:get': async (request, response) => {
+  '/heroes:get': async (request, response) => { 
     const { id } = request.queryString
-    const heroes = await heroService.find(id)
+    const heroes = await heroService.find(id) 
+    response.writeHead(200, DEFAULT_HEADER);
     response.write(JSON.stringify({ results: heroes }))
-
+    
     return response.end()
   },
   '/heroes:post': async (request, response) => {
-    // async iterator 
-    for await (const data of request) {
-      const item = JSON.parse(data)
-      const hero = new Hero(item)
-      const { error, valid } = hero.isValid()
-      if (!valid) {
-        response.writeHead(400, DEFAULT_HEADER)
-        response.writeHead(JSON.stringify({ error: error.join(',') }))
-        return response.end()
-      }
+      // async iterator 
+      for await (const data of request) {
+       try { 
+        const item = JSON.parse(data)
+        // await Promise.reject('/heroes:get')        
+        const hero = new Hero(item)
+        const { error, valid } = hero.isValid()
+        if(!valid){
+          response.writeHead(400, DEFAULT_HEADER)
+          response.write(JSON.stringify({ error: error.join(',') }))
+          return response.end()
+        }
+        
+        const id = await heroService.create(hero)
+        response.writeHead(201, DEFAULT_HEADER)
+        response.write(JSON.stringify({ sucess: 'User Create with Sucess!!', id}))
 
-      const id = await heroService.create(hero)
-      response.write(201, DEFAULT_HEADER)
-      response.write(JSON.stringify({ sucess: 'User Create with Sucess!!', id }))
-      return response.end()
+        // Just use the return, because you know it's a single object body for the request.
+        // If the file is requested, treat it like a demand.
+        // There could be multiple openings of the file on the same event. Here, the return is removed.
+        return response.end()
+      } catch(error){
+        return handleError('error', error)
+      }
     }
   },
   default: (request, response) => {
@@ -39,6 +49,15 @@ const routes = {
   }
 }
 
+const handleError = response => {
+  return error => {
+    console.log('Deu ruim!', error)
+    response.writeHead(500, DEFAULT_HEADER)
+    response.write(JSON.stringify({ error: 'Internal Server Error!!'}))
+    
+    return response.end()
+  }
+}
 const handler = (request, response) => {
   const parsedUrl = url.parse(request.url, true);
   const { pathname, query } = parsedUrl;
@@ -52,10 +71,8 @@ const handler = (request, response) => {
 
   const key = `/${route}:${method}`;
 
-  response.writeHead(200, DEFAULT_HEADER);
-
   const chosen = routes[key] || routes.default;
-  return chosen(request, response);
+  return chosen(request, response).catch(handleError(response));
 };
 
 http.createServer(handler)

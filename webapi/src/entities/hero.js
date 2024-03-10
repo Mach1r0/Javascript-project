@@ -21,7 +21,3 @@ class Hero {
 }
 
 module.exports = Hero 
-
-// const hero = new Hero({ name: "daniel", age: 100, power: "Superforça"})
-// console.log('valid', hero.isValid())
-// console.log('valid', hero)
