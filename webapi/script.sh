@@ -1,23 +1,22 @@
-echo -e '\n\n requesting all heroes'
-curl localhost:3000/heroes
+echo  '\n\n requesting all heroes'
+curl --silent localhost:3000/heroes 
 
-echo -e '\n\n requesting flash'
-curl localhost:3000/heroes/1 
+echo '\n\n requesting the first hero'
+curl --silent localhost:3000/heroes/1
 
-echo -e '\n\n requesting with wrong body'
+echo '\n\n requesting with wrong values'
 curl --silent -X POST \
-    --data-binary '{"invalid": "data"}' \
+    --data-binary '{"invalid": "Batman"}' \
     localhost:3000/heroes
 
-echo -e '\n\n Creating Chapolin '
-CREATE=$( curl --silent -X POST \
-    --data-binary '{"name": "Chapolin", "age": "100", "power": "Strength"}' \
+echo '\n\n creating batman'
+CREATE=$(curl --silent -X POST \
+    --data-binary '{"name": "Batman","age": 200,"power": "Rich"}' \
     localhost:3000/heroes)
-
+    
 echo $CREATE
 
 ID=$(echo $CREATE | jq .id)
-echo $ID
 
-echo '\n\n requesting Chapolin'
-curl localhost:3000/heroes/$ID
+echo '\n\n requesting batman'
+curl --silent localhost:3000/heroes/$ID

@@ -1,19 +1,17 @@
-const HeroRepository = require('./../repositories/heroRepository')
-const HeroService = require('./../services/heroService')
 const { join } = require('path')
-const filename = join(__dirname, '../../database', 'data.json')
+const file = join(__dirname, '../', '../database', 'data.json')
+
+const HeroRepository = require('../repositories/heroRepository')
+const HeroService = require('../services/heroService')
+
 
 const generateInstance = () => {
-    const heroRepository = new HeroRepository({
-        file: filename
-    })
-    const heroService = new HeroService({
-        HeroRepository: heroRepository
-    })
+    const heroRepository = new HeroRepository({ file })
+    const heroService = new HeroService({ heroRepository })
 
-    return heroService
+    return heroService;
 }
 
-module.exports = { generateInstance } 
+module.exports = { generateInstance }
 
 // generateInstance().find().then(console.log)

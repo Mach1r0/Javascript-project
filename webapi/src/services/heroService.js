@@ -1,17 +1,13 @@
-const HeroRepository = require("../repositories/heroRepository")
-
 class HeroService {
-    constructor({ HeroRepository }){
-        console.log(HeroRepository); // Add this line
-        this.HeroRepository = HeroRepository
+    constructor({ heroRepository }) {
+        this.heroRepository = heroRepository
+    }
+    async find(itemId) {
+        return this.heroRepository.find(itemId)
     }
 
-    async find(itemId){
-        return this.HeroRepository.find(itemId)
-    }
-
-    async create (data){
-        return this.HeroRepository.create(data)
+    async create(data) {
+        return this.heroRepository.create(data)
     }
 }
 
